@@ -1,0 +1,41 @@
+rednibroj;puninaziv;kratica;adresa;grad;pbr;godinaosnivanja;brojstudenata;dekan;menza;brstudija;brojzaposlenika;naziv;trajanje;vrsta
+1;Fakultet elektrotehnike i računarstva;FER;Unska 3;Zagreb;10000;1956;3700;Vedran Bilas;t;5;600;Elektrotehnika i informacijska tehnologija;3;Preddiplomski
+1;Fakultet elektrotehnike i računarstva;FER;Unska 3;Zagreb;10000;1956;3700;Vedran Bilas;t;5;600;Računarstvo;3;Preddiplomski
+1;Fakultet elektrotehnike i računarstva;FER;Unska 3;Zagreb;10000;1956;3700;Vedran Bilas;t;5;600;Elektrotehnika i informacijska tehnologija;2;Diplomski
+1;Fakultet elektrotehnike i računarstva;FER;Unska 3;Zagreb;10000;1956;3700;Vedran Bilas;t;5;600;Informacijska i komunikacijska tehnologija;2;Diplomski
+1;Fakultet elektrotehnike i računarstva;FER;Unska 3;Zagreb;10000;1956;3700;Vedran Bilas;t;5;600;Računarstvo;2;Diplomski
+2;Fakultet političkih znanosti;FPZG;Lepušićeva 6;Zagreb;10000;1962;1735;Andrija Henjak;f;4;112;Novinarstvo;3;Preddiplomski
+2;Fakultet političkih znanosti;FPZG;Lepušićeva 6;Zagreb;10000;1962;1735;Andrija Henjak;f;4;112;Politologija;4;Preddiplomski
+2;Fakultet političkih znanosti;FPZG;Lepušićeva 6;Zagreb;10000;1962;1735;Andrija Henjak;f;4;112;Novinarstvo;2;Diplomski
+2;Fakultet političkih znanosti;FPZG;Lepušićeva 6;Zagreb;10000;1962;1735;Andrija Henjak;f;4;112;Politologija;1;Diplomski
+3;Arhitektonski fakultet u Zagrebu;AFZG;Ulica Andrije Kačića Miošića 26;Zagreb;10000;1919;1017;Bojan Baletić;t;4;121;Arhitektura i urbanizam;3;Preddiplomski
+3;Arhitektonski fakultet u Zagrebu;AFZG;Ulica Andrije Kačića Miošića 26;Zagreb;10000;1919;1017;Bojan Baletić;t;4;121;Dizajn;3;Preddiplomski
+3;Arhitektonski fakultet u Zagrebu;AFZG;Ulica Andrije Kačića Miošića 26;Zagreb;10000;1919;1017;Bojan Baletić;t;4;121;Arhitektura i urbanizam;2;Diplomski
+3;Arhitektonski fakultet u Zagrebu;AFZG;Ulica Andrije Kačića Miošića 26;Zagreb;10000;1919;1017;Bojan Baletić;t;4;121;Dizajn;2;Diplomski
+4;Fakultet organizacije i informatike;FOI;Pavlinska 2;Varaždin;42000;1974;1600;Marina Klačmer Čalopa;t;5;160;Informacijski i poslovni sustavi;3;Preddiplomski
+4;Fakultet organizacije i informatike;FOI;Pavlinska 2;Varaždin;42000;1974;1600;Marina Klačmer Čalopa;t;5;160;Ekonomika poduzetništva;3;Preddiplomski
+4;Fakultet organizacije i informatike;FOI;Pavlinska 2;Varaždin;42000;1974;1600;Marina Klačmer Čalopa;t;5;160;Informacijske tehnologije i digitalizacija poslovanja;3;Preddiplomski
+4;Fakultet organizacije i informatike;FOI;Pavlinska 2;Varaždin;42000;1974;1600;Marina Klačmer Čalopa;t;5;160;Diplomski studiji informatike;3;Diplomski
+4;Fakultet organizacije i informatike;FOI;Pavlinska 2;Varaždin;42000;1974;1600;Marina Klačmer Čalopa;t;5;160;Ekonomika poduzetništva;3;Diplomski
+5;Geodetski fakultet;GEOF;Ulica Andrije Kačića Miošića 26;Zagreb;10000;1962;700;Mladen Zrinjski;t;3;80;Geodezija i geoinformatika;3;Preddiplomski
+5;Geodetski fakultet;GEOF;Ulica Andrije Kačića Miošića 26;Zagreb;10000;1962;700;Mladen Zrinjski;t;3;80;Geodezija;2;Diplomski
+5;Geodetski fakultet;GEOF;Ulica Andrije Kačića Miošića 26;Zagreb;10000;1962;700;Mladen Zrinjski;t;3;80;Geoinformatika;2;Diplomski
+6;Kineziološki fakultet;KIF;Horvaćanski zavoj 15;Zagreb;10000;1959;1200;Mario Baić;f;1;417;Kineziologija;5;Integrirani preddiplomski i diplomski sveučilišni studij
+7;Ekonomski fakultet;EFZG;Trg John F. Kennedy 6;Zagreb;10000;1920;8500;Sanja Sever Mališ;t;2;260;Poslovna ekonomija;5;Integrirani preddiplomski i diplomski sveučilišni studij
+7;Ekonomski fakultet;EFZG;Trg John F. Kennedy 6;Zagreb;10000;1920;8500;Sanja Sever Mališ;t;2;260;Ekonomija;5;Integrirani preddiplomski i diplomski sveučilišni studij
+8;Fakultet šumarstva i drvne tehnologije u Zagrebu;FŠDT;Svetošimunska cesta 23;Zagreb;10000;1898;800;Josip Margaletić;t;6;182;Šumarstvo;3;Preddiplomski
+8;Fakultet šumarstva i drvne tehnologije u Zagrebu;FŠDT;Svetošimunska cesta 23;Zagreb;10000;1898;800;Josip Margaletić;t;6;182;Uzgajanje i uređivanje šuma s lovnim gospodarenjem;2;Diplomski
+8;Fakultet šumarstva i drvne tehnologije u Zagrebu;FŠDT;Svetošimunska cesta 23;Zagreb;10000;1898;800;Josip Margaletić;t;6;182;Tehnika, tehnologija i management u šumarstvu;2;Diplomski
+8;Fakultet šumarstva i drvne tehnologije u Zagrebu;FŠDT;Svetošimunska cesta 23;Zagreb;10000;1898;800;Josip Margaletić;t;6;182;Drvna tehnologija;3;Preddiplomski
+8;Fakultet šumarstva i drvne tehnologije u Zagrebu;FŠDT;Svetošimunska cesta 23;Zagreb;10000;1898;800;Josip Margaletić;t;6;182;Drvnotehnološki procesi;2;Diplomski
+8;Fakultet šumarstva i drvne tehnologije u Zagrebu;FŠDT;Svetošimunska cesta 23;Zagreb;10000;1898;800;Josip Margaletić;t;6;182;Oblikovanje proizvoda od drva;2;Diplomski
+9;Metalurški fakultet;SIMET;Aleja narodnih heroja 3;Sisak;44000;1979;150;Nikola Mrvac;f;4;41;Metalurgija;3;Preddiplomski
+9;Metalurški fakultet;SIMET;Aleja narodnih heroja 3;Sisak;44000;1979;150;Nikola Mrvac;f;4;41;Sigurnost, zdravlje na radu i radni okoliš;3;Preddiplomski
+9;Metalurški fakultet;SIMET;Aleja narodnih heroja 3;Sisak;44000;1979;150;Nikola Mrvac;f;4;41;Metalurgija;2;Diplomski
+9;Metalurški fakultet;SIMET;Aleja narodnih heroja 3;Sisak;44000;1979;150;Nikola Mrvac;f;4;41;Sigurnost, zdravlje na radu i radni okoliš;2;Diplomski
+10;Fakultet prometnih znanosti;FPZ;Vukelićeva ulica 4;Zagreb;10000;1984;1779;Marko Šoštarić;f;6;202;Promet;3;Preddiplomski
+10;Fakultet prometnih znanosti;FPZ;Vukelićeva ulica 4;Zagreb;10000;1984;1779;Marko Šoštarić;f;6;202;Inteligentni transportni sustavi i logistika;3;Preddiplomski
+10;Fakultet prometnih znanosti;FPZ;Vukelićeva ulica 4;Zagreb;10000;1984;1779;Marko Šoštarić;f;6;202;Aeronautika;3;Preddiplomski
+10;Fakultet prometnih znanosti;FPZ;Vukelićeva ulica 4;Zagreb;10000;1984;1779;Marko Šoštarić;f;6;202;Promet;2;Diplomski
+10;Fakultet prometnih znanosti;FPZ;Vukelićeva ulica 4;Zagreb;10000;1984;1779;Marko Šoštarić;f;6;202;Inteligentni transportni sustavi i logistika;2;Diplomski
+10;Fakultet prometnih znanosti;FPZ;Vukelićeva ulica 4;Zagreb;10000;1984;1779;Marko Šoštarić;f;6;202;Aeronautika;2;Diplomski
