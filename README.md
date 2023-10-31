@@ -4,7 +4,7 @@
 - **Autor**: Ante Volarević
 - **JMBAG**: 0036541973
 - **Verzija**: 1.0
-- **Licenca**: Creative Commons: CC BY-SA 3.0 HR DEED 
+- **Licencija**: Creative Commons: CC BY-SA 3.0 HR DEED 
 - **Datum kreiranja**: 29.10.2023.
 - **Datum zadnje izmjene i objave**: 01.11.2023.
 - **Jezik**: hrvatski
