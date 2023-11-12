@@ -3,13 +3,15 @@
 - **Naslov**: Podaci o fakultetima sveučilišta u Zagrebu
 - **Autor**: Ante Volarević
 - **JMBAG**: 0036541973
-- **Verzija**: 1.0
-- **Licencija**: Creative Commons: CC BY-SA 3.0 HR DEED 
+- **Verzija**: 2.0
+- **Licencija**: Creative Commons: CC BY-SA 4.0 
 - **Datum kreiranja**: 29.10.2023.
-- **Datum zadnje izmjene i objave**: 01.11.2023.
+- **Datum zadnje izmjene i objave**: 12.11.2023.
 - **Jezik**: hrvatski
 - **Opis**: korisni podaci o fakultetima Sveučilišta u Zagrebu
 - **Tip datoteka u repozitoriju**: CSV, JSON
+
+## Release 1.0
 
 ## Opis atributa: 
 ### Tablica podaci_o_fakultetima
@@ -29,3 +31,7 @@
 - naziv - naziv studijskog programa; tip podataka: varchar(255)
 - trajanje - trajanje studija izražen u broju godina; tip podataka: int
 - vrsta - vrsta studijskog programa; tip podataka: varchar(255)
+
+## Release 2.0  
+- Dodana mogučnost pretrage, filtriranja i preuzimanja podataka
+- Dodana pripadajuća schema za json datoteke
