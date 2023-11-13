@@ -1,0 +1,147 @@
+/* Reset some default browser styles */
+body, h1, h2, p, ul, li {
+    margin: 0;
+    padding: 0;
+    line-height: 1.8
+}
+
+/* Set a background color for the entire page */
+body {
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+}
+
+/* Style the header */
+header {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    line-height: 2;
+}
+
+header h1 {
+    font-size: 3em;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #fff;
+}
+
+#oNama p{
+    font-size: larger;
+    margin-bottom: 5px;
+}
+
+/* Style the main content */
+main {
+    margin: 20px;
+    padding: 20px;
+
+}
+#oNama{
+    display: grid;
+    grid-template-columns: 50% 50%; /* Two equal-width columns */
+    gap: 20px; /* Adjust the gap between columns */
+}
+
+section h2 {
+    font-size: 2em;
+    margin-bottom: 5px;
+}
+
+section ul {
+    list-style: none;
+    padding: 0;
+}
+#prvi{
+    background-color: #fff;
+    border-radius: 10px;
+    border-radius: 5px;
+    padding: 20px;
+}
+#drugi{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0;
+}
+/* Style the list items */
+section li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+section li a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+}
+#dolje {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    margin-top: 20px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#dolje h2 {
+    color: #333;
+    font-size: 1.5em;
+    margin-bottom: 15px;
+}
+
+#dolje ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#dolje li {
+    margin-bottom: 10px;
+}
+
+#dolje li a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+#dolje li a:hover {
+    background-color: #e0e0e0;
+}
+
+#dolje li img {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+#dolje li a img+* {
+    margin-left: 10px;
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+}

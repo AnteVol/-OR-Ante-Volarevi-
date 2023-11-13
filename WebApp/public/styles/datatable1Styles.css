@@ -1,0 +1,146 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+h1 {
+    text-align: center;
+}
+
+#tablica {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+thead {
+    background-color: #f2f2f2;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+tr {
+    background-color: #f2f2f2;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#showTableButton {
+    background-color: #3498db;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#showTableButton:hover {
+    background-color: #2980b9;
+}
+
+#dolje {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    margin-top: 20px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#dolje h2 {
+    color: #333;
+    font-size: 1.5em;
+    margin-bottom: 15px;
+}
+
+#dolje ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#dolje li {
+    margin-bottom: 10px;
+}
+
+#dolje li a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+#dolje li a:hover {
+    background-color: #e0e0e0;
+}
+
+#dolje li img {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+#dolje li a img+* {
+    margin-left: 10px;
+}
+form {
+    box-sizing: border-box; /* Add box-sizing to include padding and border in the width */
+    width: 100%;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    text-align: center;
+    margin: 0; /* Remove default margin to prevent unnecessary space */
+}
+
+fieldset {
+    box-sizing: border-box; /* Add box-sizing to include padding and border in the width */
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    display: inline-block;
+    width: 100%; /* Ensure the fieldset takes up 100% width */
+    margin: 0; /* Remove default margin to prevent unnecessary space */
+}
+
+label {
+    font-size: 1.2em;
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+select {
+    box-sizing: border-box; /* Add box-sizing to include padding and border in the width */
+    width: calc(100% - 16px); /* Adjust width to include padding and border */
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #3498db;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
