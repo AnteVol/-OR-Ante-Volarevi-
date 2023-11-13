@@ -1,0 +1,94 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>UniGuide: rezultati</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="title" content="Podaci o fakultetima sveučilišta u Zagrebu">
+        <meta name="description" content="Korisni podaci o fakultetima Sveučilišta u Zagrebu">
+        <meta name="author" content="Ante Volarević">
+        <meta name="keywords" content="fakulteti, informacije, rezultatiPretrage, CSV, JSON">
+        <meta name="language" content="hrvatski">
+        <meta name="author" content="Ante Volarević">
+        <link rel="icon" href="/unizg-logo.png" type="image/png">
+        <link rel="stylesheet" type="text/css" href="/styles/datatable1Styles.css">
+    </head>
+    <body>
+        <h1>Evo vaših rezultata!</h1>
+        <section id="dolje">
+            <h2>Preuzmite ih:</h2>
+            <ul>
+                <li><a href="/files/Rezultati.json" download>
+                    <img src="/images/JSON.png" alt="JSON">
+                    Rezultati.json
+                </a></li>
+                <li><a href="/files/Rezultati.csv" download>
+                    <img src="/images/CSV.png" alt="CSV">
+                    Rezultati.csv
+                </a></li>
+            </ul>
+        </section>
+        <table id="tablica" style="border-collapse: collapse; width: 100%;">
+                    <thead style="background-color: #f2f2f2;">
+                        <tr>
+                            <th>Redni broj</th>
+                            <th>Puni naziv</th>
+                            <th>Kratica</th>
+                            <th>Adresa</th>
+                            <th>Grad</th>
+                            <th>PBR</th>
+                            <th>Godina osnivanja</th>
+                            <th>Broj studenata</th>
+                            <th>Dekan</th>
+                            <th>Menza</th>
+                            <th>Broj zaposlenika</th>
+                            <th>Broj studija</th>
+                            <th>Naziv</th>
+                            <th>Trajanje</th>
+                            <th>Vrsta</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for (let index = 0; index < rows.length; index++) { %>
+                            <% const row = rows[index]; %>
+                            <tr>
+                                <td><%= row.rednibroj %></td>
+                                <td><%= row.puninaziv %></td>
+                                <td><%= row.kratica %></td>
+                                <td><%= row.adresa %></td>
+                                <td><%= row.grad %></td>
+                                <td><%= row.pbr %></td>
+                                <td><%= row.godinaosnivanja %></td>
+                                <td><%= row.brojstudenata %></td>
+                                <td><%= row.dekan %></td>
+                                <td><%= row.menza %></td>
+                                <td><%= row.brojzaposlenika %></td>
+                                <td><%= row.brstudija %></td>
+                                <td><%= row.naziv %></td>
+                                <td><%= row.trajanje %></td>
+                                <td><%= row.vrsta %></td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+            </tbody>
+        </table>
+        <script>
+            // JavaScript code to show/hide the table
+            const showTableButton = document.getElementById("showTableButton");
+            const table = document.getElementById("tablica");
+
+            showTableButton.addEventListener("click", () => {
+                if (table.style.display === "none") {
+                    table.style.display = "table";
+                } else {
+                    table.style.display = "none";
+                }
+            });
+        </script>
+        <script>
+            document.getElementById('showTableButton').addEventListener('click', function() {
+              const searchText = document.getElementById('sadrzaj').value;
+              document.getElementById('resultArea').textContent = `You entered: ${searchText}`;
+            });
+          </script>
+    </body>
+</html>

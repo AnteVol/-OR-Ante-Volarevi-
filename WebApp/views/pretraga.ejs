@@ -1,0 +1,111 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>UniGuide: rezultati</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="title" content="Podaci o fakultetima sveučilišta u Zagrebu">
+        <meta name="description" content="Korisni podaci o fakultetima Sveučilišta u Zagrebu">
+        <meta name="author" content="Ante Volarević">
+        <meta name="keywords" content="fakulteti, informacije, rezultatiPretrage, CSV, JSON">
+        <meta name="language" content="hrvatski">
+        <meta name="author" content="Ante Volarević">
+        <link rel="icon" href="/unizg-logo.png" type="image/png">
+        <link rel="stylesheet" type="text/css" href="/styles/datatable1Styles.css">
+    </head>
+    <body>
+        <h1>Dobrodošli na bazu naših podataka!</h1>
+        <div id="moj">
+        <form action="/datatable" method="POST">
+            <fieldset>
+            <label for="text">Polje za pretragu:</label><br>
+            <input type="text" name="text" id="sadrzaj"><br>
+            <select name="kategorija">
+                <option value="sve" selected>Po svim kategorijama</option>
+                <option value="rednibroj">redniBroj</option>
+                <option value="puninaziv">puniNaziv</option>
+                <option value="adresa">Adresa</option>
+                <option value="kratica">Kratica</option>
+                <option value="adresa">Adresa</option>
+                <option value="grad">Grad</option>
+                <option value="pbr">PBR</option>
+                <option value="godinaosnivanja">Godina osnivanja</option>
+                <option value="brojstudenata">Broj studenata</option>
+                <option value="dekan">Dekan</option>
+                <option value="menza">Menza</option>
+                <option value="brojzaposlenika">Broj zaposlenika</option>
+                <option value="brstudija">Broj studija</option>
+                <option value="naziv">Naziv</option>
+                <option value="trajanje">Trajanje</option>
+                <option value="vrsta">Vrsta</option>
+            </select>
+            <br>
+            <button id="showTableButton">Prikazi</button> <!-- Add the button -->
+            </fieldset>
+        </form>
+        </div>
+        <div id="resultArea"></div>
+        <table id="tablica" style="border-collapse: collapse; width: 100%;">
+                    <thead style="background-color: #f2f2f2;">
+                        <tr>
+                            <th style="border: 1px solid #ddd; padding: 8px;">Redni broj</th>
+                            <th style="border: 1px solid #ddd; padding: 8px;">Puni naziv</th>
+                            <th style="border: 1px solid #ddd; padding: 8px;">Kratica</th>
+                            <th style="border: 1px solid #ddd; padding: 8px;">Adresa</th>
+                            <th style="border: 1px solid #ddd; padding: 8px;">Grad</th>
+                            <th style="border: 1px solid #ddd; padding: 8px;">PBR</th>
+                            <th style="border: 1px solid #ddd; padding: 8px;">Godina osnivanja</th>
+                            <th style="border: 1px solid #ddd; padding: 8px;">Broj studenata</th>
+                            <th style="border: 1px solid #ddd; padding: 8px;">Dekan</th>
+                            <th style="border: 1px solid #ddd; padding: 8px;">Menza</th>
+                            <th style="border: 1px solid #ddd; padding: 8px;">Broj zaposlenika</th>
+                            <th style="border: 1px solid #ddd; padding: 8px;">Broj studija</th>
+                            <th style="border: 1px solid #ddd; padding: 8px;">Naziv</th>
+                            <th style="border: 1px solid #ddd; padding: 8px;">Trajanje</th>
+                            <th style="border: 1px solid #ddd; padding: 8px;">Vrsta</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for (let index = 0; index < rows.length; index++) { %>
+                            <% const row = rows[index]; %>
+                            <tr style=" background-color: #f2f2f2">
+                                <td style="border: 1px solid #ddd; padding: 8px;"><%= row.rednibroj %></td>
+                                <td style="border: 1px solid #ddd; padding: 8px;"><%= row.puninaziv %></td>
+                                <td style="border: 1px solid #ddd; padding: 8px;"><%= row.kratica %></td>
+                                <td style="border: 1px solid #ddd; padding: 8px;"><%= row.adresa %></td>
+                                <td style="border: 1px solid #ddd; padding: 8px;"><%= row.grad %></td>
+                                <td style="border: 1px solid #ddd; padding: 8px;"><%= row.pbr %></td>
+                                <td style="border: 1px solid #ddd; padding: 8px;"><%= row.godinaosnivanja %></td>
+                                <td style="border: 1px solid #ddd; padding: 8px;"><%= row.brojstudenata %></td>
+                                <td style="border: 1px solid #ddd; padding: 8px;"><%= row.dekan %></td>
+                                <td style="border: 1px solid #ddd; padding: 8px;"><%= row.menza %></td>
+                                <td style="border: 1px solid #ddd; padding: 8px;"><%= row.brojzaposlenika %></td>
+                                <td style="border: 1px solid #ddd; padding: 8px;"><%= row.brstudija %></td>
+                                <td style="border: 1px solid #ddd; padding: 8px;"><%= row.naziv %></td>
+                                <td style="border: 1px solid #ddd; padding: 8px;"><%= row.trajanje %></td>
+                                <td style="border: 1px solid #ddd; padding: 8px;"><%= row.vrsta %></td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+            </tbody>
+        </table>
+        <script>
+            // JavaScript code to show/hide the table
+            const showTableButton = document.getElementById("showTableButton");
+            const table = document.getElementById("tablica");
+
+            showTableButton.addEventListener("click", () => {
+                if (table.style.display === "none") {
+                    table.style.display = "table";
+                } else {
+                    table.style.display = "none";
+                }
+            });
+        </script>
+        <script>
+            document.getElementById('showTableButton').addEventListener('click', function() {
+              const searchText = document.getElementById('sadrzaj').value;
+              document.getElementById('resultArea').textContent = `You entered: ${searchText}`;
+            });
+          </script>
+    </body>
+</html>
