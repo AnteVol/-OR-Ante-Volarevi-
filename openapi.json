@@ -1,0 +1,401 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Fakulteti API",
+    "version": "1.0",
+    "description": "API za pristup podacima o fakultetima Sveučilišta u Zagrebu",
+    "contact": {
+      "name": "Ante Volarević",
+      "email": "ante.volarevic@fer.hr"
+    },
+	 "license": {
+      "name": "Creative Commons Attribution 4.0 International License",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "paths": {
+    "/fakulteti": {
+      "get": {
+        "summary": "Dohvaćanje svih fakulteta",
+        "responses": {
+          "200": {
+            "description": "Uspješno dohvaćanje",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "OK",
+                  "message": "Fetched department objects",
+                  "response": {
+                    "rows": [],
+                    "links": [
+                      {
+                        "href": "/fakulteti",
+                        "rel": "self",
+                        "type": "GET"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - Nisu pronađeni traženi fakulteti"
+          },
+          "500": {
+            "description": "Internal server error - Greška prilikom dohvaćanja podataka iz baze"
+          }
+        }
+      }
+    },
+    "/fakulteti/{id}": {
+      "get": {
+        "summary": "Dohvaćanje fakulteta prema rednom broju",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Redni broj fakulteta",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Uspješno dohvaćanje",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "OK",
+                  "message": "Fetched department object",
+                  "response": {
+                    "rows": [],
+                    "links": [
+                      {
+                        "href": "/fakulteti/{id}",
+                        "rel": "fakulteti",
+                        "type": "GET"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - Ne postoji fakultet sa traženim ID-om"
+          },
+          "500": {
+            "description": "Internal server error - Greška prilikom dohvaćanja podataka iz baze"
+          }
+        }
+      }
+    },
+    "/fakulteti/grad/{grad}": {
+      "get": {
+        "summary": "Dohvaćanje fakulteta prema gradu",
+        "parameters": [
+          {
+            "name": "grad",
+            "in": "path",
+            "description": "Naziv grada",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Uspješno dohvaćanje",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "OK",
+                  "message": "Fetched department object",
+                  "response": {
+                    "rows": [],
+                    "links": [
+                      {
+                        "href": "/fakulteti/grad/{grad}",
+                        "rel": "fakulteti",
+                        "type": "GET"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - Ne postoje fakulteti u tom gradu"
+          },
+          "500": {
+            "description": "Internal server error - Greška prilikom dohvaćanja podataka iz baze"
+          }
+        }
+      }
+    },
+    "/fakulteti/kratica/{kratica}": {
+      "get": {
+        "summary": "Dohvaćanje fakulteta prema kratici",
+        "parameters": [
+          {
+            "name": "kratica",
+            "in": "path",
+            "description": "Kratica prema kojoj razlikujemo fakultete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Uspješno dohvaćanje",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "OK",
+                  "message": "Fetched department object",
+                  "response": {
+                    "rows": [],
+                    "links": [
+                      {
+                        "href": "/fakulteti/kratica/{kratica}",
+                        "rel": "fakulteti",
+                        "type": "GET"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - Ne postoji fakultet sa tom kraticom"
+          },
+          "500": {
+            "description": "Internal server error - Greška prilikom dohvaćanja podataka iz baze"
+          }
+        }
+      }
+    },
+    "/fakulteti/brst/{brst}": {
+      "get": {
+        "summary": "Dohvaćanje fakulteta prema broju studija",
+        "parameters": [
+          {
+            "name": "brst",
+            "in": "path",
+            "description": "Broj studijskih programa",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Uspješno dohvaćanje",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "OK",
+                  "message": "Fetched department object",
+                  "response": {
+                    "rows": [],
+                    "links": [
+                      {
+                        "href": "/fakulteti/brst/{brst}",
+                        "rel": "fakulteti",
+                        "type": "GET"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - Ne postoje fakulteti sa traženim brojem studija"
+          },
+          "500": {
+            "description": "Internal server error - Greška prilikom dohvaćanja podataka iz baze"
+          }
+        }
+      }
+    },
+    "/fakulteti/post": {
+      "post": {
+        "summary": "Kreiraj i ubac novi fakultet",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "example": {
+                "puninaziv": "Fakultet elekttrotrhnike i računarstva",
+                "kratica": "FER",
+                "adresa": "Unska 3",
+                "grad": "Zagreb",
+                "pbr": "10000",
+                "godinaosnivanja": "1960",
+                "brojstudenata": "5000",
+                "dekan": "Vedran Bilas",
+                "menza": "true",
+                "brstudija": "123",
+                "zaposlenika": "600",
+                "naziv": "Računarstvo",
+                "tranjanje": "3",
+                "vrsta": "Preddiplomski"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Uspješno kreiranje novog fakulteta",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "Created",
+                  "data": {
+                    "rednibroj": 1,
+                    "puninaziv": "Fakultet elekttrotrhnike i računarstva",
+                    "kratica": "FER",
+                    "adresa": "Unska 3",
+                    "grad": "Zagreb",
+                    "pbr": "10000",
+                    "godinaosnivanja": "1960",
+                    "brojstudenata": "5000",
+                    "dekan": "Vedran Bilas",
+                    "menza": "true",
+                    "brstudija": "123",
+                    "zaposlenika": "600",
+                    "naziv": "Računarstvo",
+                    "tranjanje": "3",
+                    "vrsta": "Preddiplomski"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/fakulteti/put/{id}": {
+      "put": {
+        "summary": "Ažuriranje postojećeg fakulteta",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Redni broj fakulteta čiji se podaci ažuriraju",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "example": {
+                "puninaziv": "Updated FER",
+                "kratica": "UFER",
+                "adresa": "Ozaljska 112",
+                "grad": "Zagreb",
+                "pbr": "10000",
+                "godinaosnivanja": "1960",
+                "brojstudenata": "5000",
+                "dekan": "Vedran Bilas",
+                "menza": "true",
+                "brstudija": "123",
+                "zaposlenika": "600",
+                "naziv": "Elektrotehnika",
+                "tranjanje": "6",
+                "vrsta": "Diplomski"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Faculty updated successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "success",
+                  "message": "Data updated",
+                  "data": {
+                    "rednibroj": 1,
+                    "puninaziv": "Updated FER",
+						  "kratica": "UFER",
+                    "adresa": "Ozaljska 112",
+						  "grad": "Zagreb",
+						  "pbr": "10000",
+						  "godinaosnivanja": "1960",
+						  "brojstudenata": "5000",
+						  "dekan": "Vedran Bilas",
+						  "menza": "true",
+						  "brstudija": "123",
+						  "zaposlenika": "600",
+						  "naziv": "Elektrotehnika",
+						  "tranjanje": "6",
+						  "vrsta": "Diplomski"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - Ne postoji fakultet s tim ID-om za ažurirati"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/fakulteti/delete/{id}": {
+      "delete": {
+        "summary": "Brisanje postojećeg zapisa o fakultetu",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Redni broj fakulteta za izbrisati",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Fakultet uspješno izbrisan",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "success",
+                  "message": "Uspješno izbrisan zapis",
+                  "response": []
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - Nije pronađen fakultet za izbrisati"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    }
+  }
+}
