@@ -1,6 +1,6 @@
 const express = require('express');
 const { Pool } = require('pg');
-const path = require('path'); // Dodajte ovu liniju za uvoz 'path' modula
+const path = require('path');
 const app = express();
 const pool = new Pool({
   user: 'postgres',
@@ -10,7 +10,6 @@ const pool = new Pool({
   port: 5432,
 });
 const util = require('util');
-
 const bodyParser = require('body-parser');
 const queryAsync = util.promisify(pool.query).bind(pool);
 
@@ -204,6 +203,308 @@ app.post('/datatable', async (req, res) => {
   }
 }
 });
+
+app.get('/fakulteti', async (req, res) => {
+  try {
+    const result = await queryAsync(
+      'SELECT * FROM podaciofakultetima');
+
+    const rows = result.rows;
+    if (rows.length === 0) {
+      return res.status(404).json({
+        status: 'Not Found',
+        message: 'Nisu pronađeni traženi fakulteti',
+        reponse: null
+      });
+    }
+    const response = {
+      rows,
+      links: [
+        {
+          href: `/fakulteti`,
+          rel: 'self',
+          type: 'GET'
+        }
+      ]
+    };
+    res.json({
+      status: 'OK',
+      message: 'Fetched department object',
+      response: response
+    });
+  } catch (error) {
+    console.error('Greška prilikom dohvaćanja podataka iz baze:', error);
+    res.status(500).json({
+      status: 'Internal server error',
+      message: 'Greška prilikom dohvaćanja podataka iz baze',
+      reponse: null
+    });
+  }
+});
+
+app.get('/fakulteti/:id', async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const result = await queryAsync(
+      'SELECT * FROM podaciofakultetima ' +
+      'WHERE CAST(rednibroj AS VARCHAR) LIKE $1', [id]);
+
+    const rows = result.rows;
+    if (rows.length === 0) {
+      return res.status(404).json({
+        status: '404',
+        message: 'Ne postoji fakultet sa traženim ID-om',
+        reponse: null
+      });
+    }
+
+    const response = {
+      rows,
+      links: [
+        {
+          href: `/fakulteti/${id}`,
+          rel: 'fakulteti',
+          type: 'GET'
+        }
+      ]
+    };
+    res.json({
+      status: 'OK',
+      message: 'Fetched department object',
+      response: response
+    });
+  } catch (error) {
+    console.error('Greška prilikom dohvaćanja podataka iz baze:', error);
+    res.status(500).json({
+      status: 'Internal server error',
+      message: 'Greška prilikom dohvaćanja podataka iz baze',
+      reponse: null
+    });
+  }
+});
+
+app.get('/fakulteti/grad/:grad', async (req, res) => {
+  const grad = req.params.grad;
+
+  try {
+    const result = await queryAsync(
+      'SELECT * FROM podaciofakultetima ' +
+      'WHERE CAST(grad AS VARCHAR) LIKE $1', [grad]);
+
+    const rows = result.rows;
+    if (rows.length === 0) {
+      return res.status(404).json({
+        status: 'Not Found',
+        message: 'Ne postoje fakulteti u tom gradu',
+        reponse: null
+      });
+    }
+    const response = {
+      rows,
+      links: [
+        {
+          href: `/fakulteti/grad/${grad}`,
+          rel: 'fakulteti',
+          type: 'GET'
+        }
+      ]
+    };
+    res.json({
+      status: 'OK',
+      message: 'Fetched department object',
+      response: response
+    });
+  } catch (error) {
+    console.error('Greška prilikom dohvaćanja podataka iz baze:', error);
+    res.status(500).json({
+      status: 'Internal server error',
+      message: 'Greška prilikom dohvaćanja podataka iz baze',
+      reponse: null
+    });
+  }
+});
+
+app.get('/fakulteti/kratica/:kratica', async (req, res) => {
+  const kratica = req.params.kratica;
+
+  try {
+    const result = await queryAsync(
+      'SELECT * FROM podaciofakultetima ' +
+      'WHERE CAST(kratica AS VARCHAR) LIKE $1', [kratica]);
+
+    const rows = result.rows;
+    if (rows.length === 0) {
+      return res.status(404).json({
+        status: 'Not Found',
+        message: 'Ne postoji fakultet sa tom kraticom',
+        reponse: null
+      });
+    }
+    const response = {
+      rows,
+      links: [
+        {
+          href: `/fakulteti/kratica/${kratica}`,
+          rel: 'fakulteti',
+          type: 'GET'
+        }
+      ]
+    };
+    res.json({
+      status: 'OK',
+      message: 'Fetched department object',
+      response: response
+    });
+  } catch (error) {
+    console.error('Greška prilikom dohvaćanja podataka iz baze:', error);
+    res.status(500).json({
+      status: 'Internal server error',
+      message: 'Greška prilikom dohvaćanja podataka iz baze',
+      reponse: null
+    });
+  }
+});
+
+app.get('/fakulteti/brst/:brst', async (req, res) => {
+  const brst = req.params.brst;
+
+  try {
+    const result = await queryAsync(
+      'SELECT * FROM podaciofakultetima ' +
+      'WHERE CAST(brstudija AS VARCHAR) LIKE $1', [brst]);
+
+    const rows = result.rows;
+    if (rows.length === 0) {
+      return res.status(404).json({
+        status: 'Not Found',
+        message: 'Ne postoje fakulteti sa traženim brojem studija',
+        reponse: null
+      });
+    }
+    const response = {
+      rows,
+      links: [
+        {
+          href: `/fakulteti/brst/${brst}`,
+          rel: 'fakulteti',
+          type: 'GET'
+        }
+      ]
+    };
+    res.json({
+      status: 'OK',
+      message: 'Fetched department object',
+      response: response
+    });
+  } catch (error) {
+    console.error('Greška prilikom dohvaćanja podataka iz baze:', error);
+    res.status(500).json({
+      status: 'Internal server error',
+      message: 'Greška prilikom dohvaćanja podataka iz baze',
+      reponse: null
+    });
+  }
+});
+
+app.post('/fakulteti/post', async (req, res) => {
+  let pom = await queryAsync('SELECT max(rednibroj) FROM podaciofakultetima2');
+  let novi_id = pom.rows[0].max;
+  console.log(novi_id);
+  const unos = req.query;
+  novi_id = novi_id + 1;
+  try {
+    const { fakulteti } = await queryAsync('INSERT INTO podaciofakultetima2 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15) '+
+    'RETURNING *', [novi_id, unos.puninaziv, unos.kratica, unos.adresa, unos.grad, unos.pbr, unos.godinaosnivanja,
+       unos.brojstudenata, unos.dekan, unos.menza, unos.brstudija, unos.zaposlenika, unos.naziv, unos.tranjanje, unos.vrsta]);
+    const { studij } = await queryAsync('INSERT INTO studijski_program VALUES ($1, $2, $3, $4) '+
+    'RETURNING *', [novi_id, unos.naziv, unos.tranjanje, unos.vrsta]);
+    res.status(201).json({
+      status: 'Created',
+      data: fakulteti
+    });
+  } catch (error) {
+    console.error('Greška prilikom dodavanja podatka u bazu:', error);
+    res.status(500).json({
+      status: 'Internal server error',
+      message: 'Greška prilikom dodavanja podatka u bazu',
+      reponse: null
+    });
+  }
+});
+
+
+app.put('/fakulteti/put/:id', async (req, res) => {
+  const id = req.params.id;
+
+  const { puninaziv, kratica, adresa, grad, pbr, godinaosnivanja, brojstudenata, dekan, menza, brstudija, zaposlenika, naziv, tranjanje, vrsta } = req.query;
+
+  const requiredParams = ['puninaziv', 'kratica', 'adresa', 'grad', 'pbr', 'godinaosnivanja', 'brojstudenata', 'dekan', 'menza', 'brstudija', 'zaposlenika', 'naziv', 'tranjanje', 'vrsta'];
+  const missingParams = requiredParams.filter(param => req.query[param] === undefined);
+
+
+  const updateColumns = Object.keys(req.query).map(param => `${param} = \'${req.query[param]}\'`).join(', ');
+  console.log(updateColumns)
+  const updateQuery = `UPDATE podaciofakultetima2 SET ${updateColumns} WHERE rednibroj = $1  RETURNING * `;
+
+  try {
+    const { rows } = await queryAsync(updateQuery, [id]);
+
+    if (rows.length === 0) {
+      return res.status(404).json({
+        status: 'Not Found',
+        message: 'Ne postoji fakultet s tim ID-om za ažurirati',
+        reponse: null
+      });
+    }
+
+    res.json({
+      status: 'success',
+      message: 'Podaci ažurirani',
+      data: rows[0],
+    });
+  } catch (error) {
+    console.error('Greška prilikom ažuriranja podataka u bazi:', error);
+    res.status(500).json({
+      status: 'Internal server error',
+      message: 'Greška prilikom ažuriranja podataka u bazi',
+      reponse: null
+    });
+  }
+});
+
+
+
+
+app.delete('/fakulteti/delete/:id', async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const { rows } = await queryAsync('DELETE FROM podaciofakultetima2 WHERE rednibroj = $1 RETURNING *', [id]);
+
+    if (rows.length === 0) {
+      return res.status(404).json({
+        status: 'Not Found',
+        message: 'Ne postoji fakultet s tim ID-om za izbisati',
+        reponse: null
+      });
+    }
+
+    res.json({
+      status: 'success',
+      message: 'Podatak je izbrisan',
+      response : rows
+    });
+  } catch (error) {
+    console.error('Greška prilikom brisanja podatka iz baze:', error);
+    res.status(500).json({
+      status: 'Internal server error',
+      message: 'Greška prilikom brisanja podatka iz baze',
+      reponse: null
+    });
+  }
+});
+
 
 const port = process.env.PORT || 3001;
 app.listen(port, () => {
