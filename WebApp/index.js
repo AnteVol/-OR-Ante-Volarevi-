@@ -1,6 +1,7 @@
 const express = require('express');
 const { Pool } = require('pg');
 const path = require('path');
+const fs = require('fs');
 const app = express();
 const pool = new Pool({
   user: 'postgres',
@@ -505,6 +506,21 @@ app.delete('/fakulteti/delete/:id', async (req, res) => {
   }
 });
 
+app.get('/openapi', (req, res) => {
+  try {
+    const openApi = fs.readFileSync('E:\\Fakultet 3. godina\\5. Semestar\\OR\\openapi.json', 'utf8');
+    res.setHeader('Content-Type', 'application/json');
+    res.send(openApi);
+  } catch (error) {
+    console.error('Greška prilikom otvaranja OpenAPI specifikacije:', error);
+    res.status(500).json({
+      status: 'Internal server error',
+      message: 'Greška prilikom otvaranja OpenAPI specifikacije',
+      response: null
+    });
+  }
+
+});
 
 const port = process.env.PORT || 3001;
 app.listen(port, () => {
