@@ -1,0 +1,125 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$id": "https://or.fer.unizg.hr/podaciFakulteti.json",
+  "title": "Fakulteti Sveučilišta u Zagrebu",
+  "description": "Skup podataka o Fakultetima Sveučilišta u Zagrebu u svrhu laboratorijskih vježbi iz kolegija Otvoreno računarstvo.",
+  "type": "array",
+  "author": "Ante Volarević",
+  "properties": {
+    "fakulteti": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "pbr": {
+            "type": "string",
+            "title": "pbr",
+            "description": "Poštanski broj grada u kojem se fakultet nalazi",
+				"maxLength": 5,
+				"minLength": 5
+          },
+          "grad": {
+            "type": "string",
+            "title": "grad",
+            "description": "Grada u kojem se fakultet nalazi"
+          },
+          "dekan": {
+            "type": "string",
+            "title": "dekan",
+            "description": "Ime i prezime trenutnog dekana fakulteta"
+          },
+          "menza": {
+            "type": "boolean",
+            "title": "menza",
+            "description": "Postoji li menza u sklopu fakulteta"
+          },
+          "adresa": {
+            "type": "string",
+            "title": "adresa",
+            "description": "Adresa fakulteta"
+          },
+          "kratica": {
+            "type": "string",
+            "title": "kratica",
+            "description": "Kraći naziv fakulteta (kratica)",
+            "maxLength": 5
+          },
+          "puninaziv": {
+            "type": "string",
+            "title": "puninaziv",
+            "description": "Puni naziv fakulteta"
+          },
+          "rednibroj": {
+            "type": "integer",
+            "title": "rednibroj",
+            "description": "Jedinstveni redni broj (šifra fakulteta u tablici)"
+          },
+          "brojStudija": {
+            "type": "integer",
+            "title": "brojStudija",
+            "description": "Broj sveučilišnih studija (ne uključuje stručne i studije na stranom jeziku)",
+            "minimum": 0
+          },
+          "opisStudija": {
+            "type": "array",
+            "title": "opisStudija",
+            "items": {
+              "type": "object",
+              "properties": {
+                "naziv": {
+                  "type": "string",
+                  "title": "naziv",
+                  "description": "Naziv studijskog programa"
+                },
+                "vrsta": {
+                  "type": "string",
+                  "title": "vrsta",
+                  "description": "Vrsta studijskog programa"
+                },
+                "trajanje": {
+                  "type": "integer",
+                  "title": "trajanje",
+                  "description": "Trajanje studija izraženo u broju godina",
+                  "minimum": 0
+                }
+              },
+              "required": ["naziv", "vrsta", "trajanje"]
+            }
+          },
+          "brojStudenata": {
+            "type": "integer",
+            "title": "brojStudenata",
+            "description": "Okviran broj studenata na fakultetu",
+            "minimum": 0
+          },
+          "brojZaposlenih": {
+            "type": "integer",
+            "title": "brojZaposlenih",
+            "description": "Okviran broj zaposlenika i vanjskih suradnika na fakultetu",
+            "minimum": 0
+          },
+          "godinaOsnivanja": {
+            "type": "integer",
+            "title": "godinaOsnivanja",
+            "description": "Službena godina osnivanja fakulteta"
+          }
+        },
+        "required": [
+          "pbr",
+          "grad",
+          "dekan",
+          "menza",
+          "adresa",
+          "kratica",
+          "puninaziv",
+          "rednibroj",
+          "brojStudija",
+          "opisStudija",
+          "brojStudenata",
+          "brojZaposlenih",
+          "godinaOsnivanja"
+        ]
+      }
+    }
+  }
+}
