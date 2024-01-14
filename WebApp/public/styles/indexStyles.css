@@ -1,17 +1,14 @@
-/* Reset some default browser styles */
 body, h1, h2, p, ul, li {
     margin: 0;
     padding: 0;
     line-height: 1.8
 }
 
-/* Set a background color for the entire page */
 body {
     background-color: #f0f0f0;
     font-family: Arial, sans-serif;
 }
 
-/* Style the header */
 header {
     background-color: #333;
     color: #fff;
@@ -44,7 +41,6 @@ nav a {
     margin-bottom: 5px;
 }
 
-/* Style the main content */
 main {
     margin: 20px;
     padding: 20px;
@@ -52,8 +48,8 @@ main {
 }
 #oNama{
     display: grid;
-    grid-template-columns: 50% 50%; /* Two equal-width columns */
-    gap: 20px; /* Adjust the gap between columns */
+    grid-template-columns: 50% 50%;
+    gap: 20px;
 }
 
 section h2 {
@@ -78,7 +74,7 @@ section ul {
     align-items: center;
     background-color: #f0f0f0;
 }
-/* Style the list items */
+
 section li {
     display: flex;
     align-items: center;
@@ -145,3 +141,38 @@ footer {
     background-color: #333;
     color: #fff;
 }
+
+button, button:active, button:focus {
+    outline: none;
+    border: none;
+  }
+  
+  button {
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  button:hover {
+    background-color: #2980b9;
+  }
+
+  button a {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  #profil {
+    background-color: #2ecc71;
+  }
+  
+  #osvjezi {
+    background-color: #e74c3c;
+  }
+  
+  #odjavi {
+    background-color: #f39c12;
+  }
