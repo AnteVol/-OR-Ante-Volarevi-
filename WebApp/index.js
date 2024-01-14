@@ -3,6 +3,23 @@ const { Pool } = require('pg');
 const path = require('path');
 const fs = require('fs');
 const app = express();
+const session = require('express-session');
+
+const { auth } = require('express-openid-connect');
+const { requiresAuth } = require('express-openid-connect');
+const authCheck = require('E:\\Fakultet 3. godina\\5. Semestar\\OR\\Frontend&Backend\\public\\middleware\\chechLoggedIn.js');
+
+
+require('dotenv').config();
+const config = {
+  authRequired: false,
+  auth0Logout: true,
+  secret: 'blablabla bla bla randomstring blabla',
+  baseURL: 'http://localhost:3001',
+  clientID: 'uNZjmUQA1iKzdDWCRN2w4nV4qASxmNWo',
+  issuerBaseURL: 'https://dev-tk04gsco8lu1zmy3.us.auth0.com'
+};
+
 const pool = new Pool({
   user: 'postgres',
   host: 'localhost',
@@ -13,15 +30,97 @@ const pool = new Pool({
 const util = require('util');
 const bodyParser = require('body-parser');
 const queryAsync = util.promisify(pool.query).bind(pool);
-
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(express.static('public'));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(auth(config));
+app.use(bodyParser.json());
+app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));
+
+app.use(session({
+  secret: 'OR',
+  resave: false,
+  saveUninitialized: true
+}));
+
+let logout = '';
+
 app.get('/', (req, res) => {
-  res.render('index')
+  console.log(req.oidc.isAuthenticated());
+  logout = req.query.logout || '';
+  res.render("index", {isAuthenticated: req.oidc.isAuthenticated(), logout});
+});
+
+app.get('/login', authCheck, (req, res) => {
+  console.log(req.oidc.isAuthenticated());
+  if(req.oidc.isAuthenticated()){
+    res.redirect("/")
+    console.log("Već ste ulogirani sa Auth0 platformom")
+  }else{
+    logout = '';
+    console.log("nedam")
+    res.redirect("https://dev-tk04gsco8lu1zmy3.us.auth0.com/u/login?state=hKFo2SBxS1VjOUtlYU1ycjRZUS1KUU10aVlsUmZ1b1UyaWxnMaFur3VuaXZlcnNhbC1sb2dpbqN0aWTZIG9YRktiVkhCc05oZkxqXzhQbmVJLVZWS05WdGpmdmxBo2NpZNkgdU5aam1VUUExaUt6ZERXQ1JOMnc0blY0cUFTeG1OV28")
+  }
+});
+
+app.get('/profile', (req, res) => {
+  if(req.oidc.isAuthenticated())
+    res.send(JSON.stringify(req.oidc.user));
+  else {
+    return res.status(401).send('Status 401! - Neovlašten pristup! Morate se prijaviti da bi mogli pristupisti ovoj stranici.');
+  }
+});
+
+app.get('/download', async (req, res) => {
+  
+  const putanjaJson = 'E:\\Fakultet 3. godina\\5. Semestar\\OR\\Frontend&Backend\\public\\files\\Najnoviji.json';
+  const putanjaCsv = 'E:\\Fakultet 3. godina\\5. Semestar\\OR\\Frontend&Backend\\public\\files\\Najnoviji.csv';
+  if(req.oidc.isAuthenticated()){
+  try {
+    const result2 = await queryAsync(
+      `COPY (
+        SELECT jsonb_agg(row_to_json(podaciofakultetima, true))
+        FROM (
+          SELECT podaciofakultetima.*
+          FROM podaciofakultetima
+          NATURAL JOIN podaciofakultetima2
+        ) AS subquery
+        NATURAL JOIN podaciofakultetima
+      ) TO '${putanjaJson}'`
+    );
+
+    const result3 = await queryAsync(
+      `COPY (SELECT * FROM podaciofakultetima2)
+       TO '${putanjaCsv}'
+       WITH (ENCODING 'UTF8', DELIMITER ';', HEADER true)`
+    );
+
+     let message = 'Uspješno preuzete najnovije verzije .csv i .json datoteka!';
+     let status = 'success';
+     const currentTime = new Date().toLocaleTimeString();
+     message = `${message} (Time: ${currentTime})`;
+
+     res.render('downloaded', { message, status });
+  } catch (error) {
+    console.error('Error querying the database:', error);
+    res.status(500).json({ error: 'Error querying the database' });
+  }
+  }else {
+    return res.status(401).send('Status 401! - Neovlašten pristup! Morate se prijaviti da bi mogli pristupisti ovoj stranici.');
+  }
+});
+
+app.get('/logoutsite', (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            console.error('Error destroying session:', err);
+        }
+        console.log("logout sa stranice")
+        
+        res.redirect('/?logout=Successfully');
+    });
 });
 
 app.get('/datatable', (req, res) => {
@@ -247,9 +346,16 @@ app.get('/fakulteti/:id', async (req, res) => {
   const id = req.params.id;
 
   try {
-    const result = await queryAsync(
-      'SELECT * FROM podaciofakultetima ' +
-      'WHERE CAST(rednibroj AS VARCHAR) LIKE $1', [id]);
+    let result;
+    if (id > 10) {
+      result = await queryAsync(
+        'SELECT * FROM podaciofakultetima2 ' +
+        'WHERE CAST(rednibroj AS VARCHAR) LIKE $1', [id]);
+    } else {
+      result = await queryAsync(
+        'SELECT * FROM podaciofakultetima ' +
+        'WHERE CAST(rednibroj AS VARCHAR) LIKE $1', [id]);
+    }
 
     const rows = result.rows;
     if (rows.length === 0) {
@@ -260,20 +366,60 @@ app.get('/fakulteti/:id', async (req, res) => {
       });
     }
 
-    const response = {
-      rows,
-      links: [
-        {
-          href: `/fakulteti/${id}`,
-          rel: 'fakulteti',
-          type: 'GET'
-        }
-      ]
+    const formattedResponse = {
+      "@context": {
+        "@vocab": "http://schema.org/",
+        "rednibroj": "identifier",
+        "naziv": "name",
+        "adresa": "address",
+        "PostalAddress": "PostalAddress",
+        "ulica": "streetAddress",
+        "grad": "addressLocality",
+        "addressRegion": "addressRegion",
+        "pbr": "postalCode",
+        "description": "description",
+        "dekan": "founder",
+        "godinaosnivanja": "foundingDate",
+        "brojStudenata": "maximumAttendeeCapacity",
+        "brojZaposlenika": "numberOfEmployees",
+        "opisstudija": "hasCourse",
+        "EducationalOccupationalProgram": "EducationalOccupationalProgram",
+        "trajanje": "timeToComplete",
+        "vrsta": "programType",
+        "kratica": "alternateName"
+      },
+      "@type": "CollegeOrUniversity",
+      "rednibroj": rows[0].rednibroj,
+      "naziv": rows[0].puninaziv,
+      "kratica": rows[0].kratica,
+      "adresa": {
+        "@type": "PostalAddress",
+        "ulica": rows[0].ulica,
+        "grad": rows[0].grad,
+        "addressRegion": rows[0].grad,
+        "pbr": rows[0].pbr
+      },
+      "dekan": {
+        "@type": "Person",
+        "naziv": rows[0].dekan
+      },
+      "godinaosnivanja": rows[0].godinaosnivanja,
+      "brojStudenata": rows[0].brojstudenata,
+      "brojZaposlenika": rows[0].brojzaposlenika,
+      "menza" : rows[0].menza,
+      "brstudija" : rows[0].brstudija,
+      "opisstudija": rows[0].opisstudija.map(program => ({
+        "@type": "EducationalOccupationalProgram",
+        "naziv": program.naziv,
+        "vrsta": program.vrsta,
+        "trajanje": `P${program.trajanje}Y`
+      }))
     };
+    console.log(rows[0].opisstudija)
     res.json({
       status: 'OK',
       message: 'Fetched department object',
-      response: response
+      response: formattedResponse
     });
   } catch (error) {
     console.error('Greška prilikom dohvaćanja podataka iz baze:', error);
@@ -301,20 +447,60 @@ app.get('/fakulteti/grad/:grad', async (req, res) => {
         reponse: null
       });
     }
-    const response = {
-      rows,
-      links: [
-        {
-          href: `/fakulteti/grad/${grad}`,
-          rel: 'fakulteti',
-          type: 'GET'
-        }
-      ]
+    const formattedResponse = {
+      "@context": {
+        "@vocab": "http://schema.org/",
+        "rednibroj": "identifier",
+        "naziv": "name",
+        "adresa": "address",
+        "PostalAddress": "PostalAddress",
+        "ulica": "streetAddress",
+        "grad": "addressLocality",
+        "addressRegion": "addressRegion",
+        "pbr": "postalCode",
+        "description": "description",
+        "dekan": "founder",
+        "godinaosnivanja": "foundingDate",
+        "brojStudenata": "maximumAttendeeCapacity",
+        "brojZaposlenika": "numberOfEmployees",
+        "opisstudija": "hasCourse",
+        "EducationalOccupationalProgram": "EducationalOccupationalProgram",
+        "trajanje": "timeToComplete",
+        "vrsta": "programType",
+        "kratica": "alternateName"
+      },
+      "@type": "CollegeOrUniversity",
+      "rednibroj": rows[0].rednibroj,
+      "naziv": rows[0].puninaziv,
+      "kratica": rows[0].kratica,
+      "adresa": {
+        "@type": "PostalAddress",
+        "ulica": rows[0].ulica,
+        "grad": rows[0].grad,
+        "addressRegion": rows[0].grad,
+        "pbr": rows[0].pbr
+      },
+      "dekan": {
+        "@type": "Person",
+        "naziv": rows[0].dekan
+      },
+      "godinaosnivanja": rows[0].godinaosnivanja,
+      "brojStudenata": rows[0].brojstudenata,
+      "brojZaposlenika": rows[0].brojzaposlenika,
+      "menza" : rows[0].menza,
+      "brstudija" : rows[0].brstudija,
+      "opisstudija": rows[0].opisstudija.map(program => ({
+        "@type": "EducationalOccupationalProgram",
+        "naziv": program.naziv,
+        "vrsta": program.vrsta,
+        "trajanje": `P${program.trajanje}Y`
+      }))
     };
+    console.log(rows[0].opisstudija)
     res.json({
       status: 'OK',
       message: 'Fetched department object',
-      response: response
+      response: formattedResponse
     });
   } catch (error) {
     console.error('Greška prilikom dohvaćanja podataka iz baze:', error);
@@ -342,20 +528,60 @@ app.get('/fakulteti/kratica/:kratica', async (req, res) => {
         reponse: null
       });
     }
-    const response = {
-      rows,
-      links: [
-        {
-          href: `/fakulteti/kratica/${kratica}`,
-          rel: 'fakulteti',
-          type: 'GET'
-        }
-      ]
+    const formattedResponse = {
+      "@context": {
+        "@vocab": "http://schema.org/",
+        "rednibroj": "identifier",
+        "naziv": "name",
+        "adresa": "address",
+        "PostalAddress": "PostalAddress",
+        "ulica": "streetAddress",
+        "grad": "addressLocality",
+        "addressRegion": "addressRegion",
+        "pbr": "postalCode",
+        "description": "description",
+        "dekan": "founder",
+        "godinaosnivanja": "foundingDate",
+        "brojStudenata": "maximumAttendeeCapacity",
+        "brojZaposlenika": "numberOfEmployees",
+        "opisstudija": "hasCourse",
+        "EducationalOccupationalProgram": "EducationalOccupationalProgram",
+        "trajanje": "timeToComplete",
+        "vrsta": "programType",
+        "kratica": "alternateName"
+      },
+      "@type": "CollegeOrUniversity",
+      "rednibroj": rows[0].rednibroj,
+      "naziv": rows[0].puninaziv,
+      "kratica": rows[0].kratica,
+      "adresa": {
+        "@type": "PostalAddress",
+        "ulica": rows[0].ulica,
+        "grad": rows[0].grad,
+        "addressRegion": rows[0].grad,
+        "pbr": rows[0].pbr
+      },
+      "dekan": {
+        "@type": "Person",
+        "naziv": rows[0].dekan
+      },
+      "godinaosnivanja": rows[0].godinaosnivanja,
+      "brojStudenata": rows[0].brojstudenata,
+      "brojZaposlenika": rows[0].brojzaposlenika,
+      "menza" : rows[0].menza,
+      "brstudija" : rows[0].brstudija,
+      "opisstudija": rows[0].opisstudija.map(program => ({
+        "@type": "EducationalOccupationalProgram",
+        "naziv": program.naziv,
+        "vrsta": program.vrsta,
+        "trajanje": `P${program.trajanje}Y`
+      }))
     };
+    console.log(rows[0].opisstudija)
     res.json({
       status: 'OK',
       message: 'Fetched department object',
-      response: response
+      response: formattedResponse
     });
   } catch (error) {
     console.error('Greška prilikom dohvaćanja podataka iz baze:', error);
@@ -383,20 +609,63 @@ app.get('/fakulteti/brst/:brst', async (req, res) => {
         reponse: null
       });
     }
-    const response = {
-      rows,
-      links: [
-        {
-          href: `/fakulteti/brst/${brst}`,
-          rel: 'fakulteti',
-          type: 'GET'
-        }
-      ]
+    const context = {
+      "@context": {
+        "@vocab": "http://schema.org/",
+        "rednibroj": "identifier",
+        "naziv": "name",
+        "adresa": "address",
+        "PostalAddress": "PostalAddress",
+        "ulica": "streetAddress",
+        "grad": "addressLocality",
+        "addressRegion": "addressRegion",
+        "pbr": "postalCode",
+        "description": "description",
+        "dekan": "founder",
+        "godinaosnivanja": "foundingDate",
+        "brojStudenata": "maximumAttendeeCapacity",
+        "brojZaposlenika": "numberOfEmployees",
+        "opisstudija": "hasCourse",
+        "EducationalOccupationalProgram": "EducationalOccupationalProgram",
+        "trajanje": "timeToComplete",
+        "vrsta": "programType",
+        "kratica": "alternateName"
+      }
+    };
+    
+    const formattedResponse = {
+      ...context,
+      "@type": "CollegeOrUniversity",
+      "rednibroj": rows.rednibroj,
+      "naziv": rows.puninaziv,
+      "kratica": rows.kratica,
+      "adresa": {
+        "@type": "PostalAddress",
+        "ulica": rows.ulica,
+        "grad": rows.grad,
+        "addressRegion": rows.grad,
+        "pbr": rows.pbr
+      },
+      "dekan": {
+        "@type": "Person",
+        "naziv": rows.dekan
+      },
+      "godinaosnivanja": rows.godinaosnivanja,
+      "brojStudenata": rows.brojstudenata,
+      "brojZaposlenika": rows.brojzaposlenika,
+      "menza" : rows.menza,
+      "brstudija" : rows.brstudija,
+      "opisstudija": rows.opisstudija.map(program => ({
+        "@type": "EducationalOccupationalProgram",
+        "naziv": program.naziv,
+        "vrsta": program.vrsta,
+        "trajanje": `P${program.trajanje}Y`
+      }))
     };
     res.json({
       status: 'OK',
       message: 'Fetched department object',
-      response: response
+      response: formattedResponse
     });
   } catch (error) {
     console.error('Greška prilikom dohvaćanja podataka iz baze:', error);
