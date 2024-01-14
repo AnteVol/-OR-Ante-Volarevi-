@@ -22,6 +22,15 @@
                 <li>O nama</li>
                 <li><a href="/datatable.html">Baza podataka</a></li>
                 <li>Dostupne datoteke</li>
+                    <% if(!isAuthenticated) { %>
+                        <li><button id="prijava"><a href="/login">Prijava</a></button></li>
+                    <% } else if(isAuthenticated && logout!=""){ %>
+                        <li><button id="prijava"><a href="/">Prijava</a></button></li>
+                    <% } else { %>
+                        <li><button id="profil"><a href="/profile">Korisnički profil</a></button></li>
+                        <li><button id="osvjezi"><a href="/download">Osvježi preslike</a></button></li>
+                        <li><button id="odjavi"><a href="/logoutsite">Odjava</a></button></li>
+                    <% } %>     
             </ul>
         </nav>
     </header>
@@ -35,13 +44,13 @@
                     <li><b>Naslov:</b> Podaci o fakultetima sveučilišta u Zagrebu</li>
                     <li><b>Autor:</b> Ante Volarević</li>
                     <li><b>JMBAG:</b> 0036541973</li>
-                    <li><b>Verzija:</b> 2.0</li>
+                    <li><b>Verzija:</b> 4.0</li>
                     <li><b>Licencija:</b> <b><a href="https://creativecommons.org/licenses/by-sa/4.0/?ref=chooser-v1">  CC BY-SA 4.0</a></b></li>
                     <li><b>Jezik:</b> hrvatski</li>
                     <li><b>Opis:</b> Korisni podaci o fakultetima Sveučilišta u Zagrebu</li>
                     <li><b>Tip datoteka u repozitoriju:</b>  <u>CSV i JSON</u></li>
                     <li><b>Datum kreiranja:</b> 29.10.2023.</li>
-                    <li><b>Datum zadnje izmjene i objave:</b> 12.11.2023.</li>
+                    <li><b>Datum zadnje izmjene i objave:</b> 10.01.2024.</li>
                 </ul>
             </div>
             <div id="drugi">
@@ -70,5 +79,6 @@
     <p>&copy; 2023 UniGuide</p>
     <p>Author: Ante Volarević</p>
 </footer>
+
 </body>
 </html>
