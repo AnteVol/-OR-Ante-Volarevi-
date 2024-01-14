@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles/downloaded.css">
+</head>
+<body>
+  <h1>Rezultati osvježavanja preslike</h1>
+  
+  <% if (status === 'success') { %>
+    <p><%= message %></p>
+  <% } else if (status === 'error') { %>
+    <p><%= message %></p>
+  <% } %>
+
+  <button onclick="goBack()">Povratak na početnu stranicu</button>
+
+  <script>
+    function goBack() {
+      window.location.href = '/';
+    }
+  </script>
+</body>
+</html>
